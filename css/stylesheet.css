@@ -2,6 +2,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-color:gainsboro;
 }
 .game-area {
     width:45vw;
@@ -11,7 +12,7 @@ html, body {
     z-index:-1;
 }
 .game-tile {
-    background-color:black;
+    background-color:slategray;
     float: left;
     width: 2vw;
     height: 2vw;
@@ -26,4 +27,12 @@ html, body {
     position:absolute;
     top:5vw;
     right:5vw;
+}
+.instructions {
+    color:gray;
+    font-family:Arial;
+    font-size: 2vw;
+    position:absolute;
+    top:5vw;
+    left:5vw;
 }

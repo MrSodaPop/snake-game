@@ -3,15 +3,24 @@ $(document).ready(function() {
     generateGameArea(20);
     gameData = generateGameData();
 
+    $('.score').click(function(){
+      if(gameData.gameOver) {
+        location.reload();
+      }
+    })
+
     $('html').keypress(function(key){switch (parseInt(key.keyCode)){
       case 97: if (gameData.direction == 'left' || gameData.direction == 'right' || gameData.changeDirection == true){return;}else{gameData.newDirection = 'left'; gameData.changeDirection = true;} break;
       case 119: if (gameData.direction == 'up' || gameData.direction == 'down' || gameData.changeDirection == true){return;}else{gameData.newDirection = 'up'; gameData.changeDirection = true;} break;
       case 100: if (gameData.direction == 'left' || gameData.direction == 'right' || gameData.changeDirection == true){return;}else{gameData.newDirection = 'right'; gameData.changeDirection = true;} break;
       case 115: if (gameData.direction == 'up' || gameData.direction == 'down' || gameData.changeDirection == true){return;}else{gameData.newDirection = 'down'; gameData.changeDirection = true;} break;
       default: console.log('invalid key');
-    }});
-
-    gameUpdate();
+    }
+    if (!gameData.gameRunning) {
+      gameData.gameRunning = true;
+      gameUpdate();
+    }
+  });
 });
 
 var gameOver = function() {
@@ -22,8 +31,9 @@ var gameOver = function() {
 var gameUpdate = function() {
 var interval = setInterval(function(){
   if(gameData.gameOver) {
-    $('.score').replaceWith("<div class=\'score\'>Game Over - " + (gameData.activeSquares.length-1) + "</div>");
+    $('.score').replaceWith("<div class=\'score\'>Restart - " + (gameData.activeSquares.length-1) + "</div>");
     $('.score').css('font-size','3vw');
+    $('.score').css('cursor','pointer');
     return;
   }
   if (gameData.changeDirection) {
@@ -49,10 +59,9 @@ var moveSnake = function() {
   if (newLead === gameData.fruitSquare) {
     temporaryArray[temporaryArray.length] = gameData.activeSquares[gameData.activeSquares.length - 1];
     generateFruit();
-    gameData.tickrate = gameData.tickrate * 0.5;
   }
   else {
-    $('#' + gameData.activeSquares[gameData.activeSquares.length - 1] + "-tile").css('background-color','black');
+    $('#' + gameData.activeSquares[gameData.activeSquares.length - 1] + "-tile").css('background-color','slategray');
   }
   gameData.activeSquares = temporaryArray;
   gameData.leadingSquare = newLead;
@@ -94,12 +103,13 @@ generateGameData = function() {
   $('#' + fruitSquare + '-tile').css('background-color','red');
   return {
     leadingSquare: leadingSquare,
-    direction: 'right',
-    newDirection: 'right',
+    direction: null,
+    newDirection: null,
     changeDirection: false,
     activeSquares: activeSquares,
     fruitSquare: fruitSquare,
-    tickrate: 200,
+    tickrate: 100,
+    gameRunning: false,
     gameOver: false
   }
 }
