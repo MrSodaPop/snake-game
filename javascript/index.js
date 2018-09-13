@@ -19,11 +19,10 @@ $(document).ready(function() {
       case 100: if (gameData.direction == 'left' || gameData.direction == 'right' || gameData.changeDirection == true){return;}else{gameData.newDirection = 'right'; gameData.changeDirection = true;} break;
       case 115: if (gameData.direction == 'up' || gameData.direction == 'down' || gameData.changeDirection == true){return;}else{gameData.newDirection = 'down'; gameData.changeDirection = true;} break;
       case 13: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press WASD to start</div>");} break;
-      default: console.log('invalid key');
+      default: return;
     }
     if (!gameData.gameRunning && key.keyCode != 13) {
       gameData.gameRunning = true;
-          
       gameUpdate();
     }
   });
