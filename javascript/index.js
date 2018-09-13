@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     $('.score').click(function(){
       if(gameData.gameOver) {
-        location.reload();
+        location.reload(true);
       }
     })
 
