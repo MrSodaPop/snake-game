@@ -34,6 +34,7 @@ var interval = setInterval(function(){
     $('.score').replaceWith("<div class=\'score\'>Restart - " + (gameData.activeSquares.length-1) + "</div>");
     $('.score').css('font-size','3vw');
     $('.score').css('cursor','pointer');
+    clearInterval(interval);
     return;
   }
   if (gameData.changeDirection) {
