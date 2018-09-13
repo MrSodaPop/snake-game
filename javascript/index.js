@@ -75,7 +75,7 @@ var moveSnake = function() {
   if (newLead === gameData.fruitSquare) {
     temporaryArray[temporaryArray.length] = gameData.activeSquares[gameData.activeSquares.length - 1];
     generateFruit();
-    gameData.tickrate = gameData.tickrate * 0.9
+    gameData.tickrate = gameData.tickrate * gameData.tickIncrease
   }
   else {
     $('#' + gameData.activeSquares[gameData.activeSquares.length - 1] + "-tile").css('background-color','slategray');
@@ -125,6 +125,7 @@ generateGameData = function() {
     changeDirection: false,
     activeSquares: activeSquares,
     fruitSquare: fruitSquare,
+    tickIncrease: 0.95,
     tickrate: 200,
     lastTick: 0,
     gameRunning: false,
