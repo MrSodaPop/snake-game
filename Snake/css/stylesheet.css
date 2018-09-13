@@ -1,0 +1,29 @@
+/* For GENERAL styling rules */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+.game-area {
+    width:45vw;
+    height:45vw;
+    margin:0;
+    padding:0;
+    z-index:-1;
+}
+.game-tile {
+    background-color:black;
+    float: left;
+    width: 2vw;
+    height: 2vw;
+    margin:0.125vw;
+    padding:0;
+    z-index:0;
+}
+.score {
+    color:gray;
+    font-family:Arial;
+    font-size: 5vw;
+    position:absolute;
+    top:5vw;
+    right:5vw;
+}
