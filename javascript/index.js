@@ -108,7 +108,7 @@ generateGameData = function() {
     changeDirection: false,
     activeSquares: activeSquares,
     fruitSquare: fruitSquare,
-    tickrate: 100,
+    tickrate: 120,
     gameRunning: false,
     gameOver: false
   }
