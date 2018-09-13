@@ -23,7 +23,7 @@ $(document).ready(function() {
     }
     if (!gameData.gameRunning && key.keyCode != 13) {
       gameData.gameRunning = true;
-      gameUpdate();
+      gameTick();
     }
   });
 });
@@ -33,24 +33,32 @@ var gameOver = function() {
   gameData.gameOver = true;
 }
 
+var gameTick = function() {
+  gameData.lastTick = Date.now();
+  var tick = setInterval(function(){
+    gameUpdate()
+  },1)
+}
+
 var gameUpdate = function() {
-var interval = setInterval(function(){
-  if(gameData.gameOver) {
-    $('.score').replaceWith("<div class=\'score\'>Game Over - " + (gameData.activeSquares.length-1) + "</div>");
-    $('.instructions').replaceWith("<div class=\'instructions\'>Press ENTER to restart</div>");
-    $('.score').css('font-size','3vw');
-    $('.score').css('cursor','pointer');
-    gameData.gameRunning = false; 
-    clearInterval(interval);
-    return;
+  if (Date.now() - gameData.lastTick >= gameData.tickrate) {
+    gameData.lastTick = Date.now();
+    if(gameData.gameOver) {
+      $('.score').replaceWith("<div class=\'score\'>Game Over - " + (gameData.activeSquares.length-1) + "</div>");
+      $('.instructions').replaceWith("<div class=\'instructions\'>Press ENTER to restart</div>");
+      $('.score').css('font-size','3vw');
+      $('.score').css('cursor','pointer');
+      gameData.gameRunning = false; 
+      return;
+    }
+    if (gameData.changeDirection) {
+      gameData.direction = gameData.newDirection;
+      gameData.changeDirection = false;
+    }
+    moveSnake();
+    $('.score').replaceWith("<div class=\'score\'>" + (gameData.activeSquares.length-1) + "</div>");
   }
-  if (gameData.changeDirection) {
-    gameData.direction = gameData.newDirection;
-    gameData.changeDirection = false;
-  }
-  moveSnake();
-  $('.score').replaceWith("<div class=\'score\'>" + (gameData.activeSquares.length-1) + "</div>");
-},gameData.tickrate)};
+};
 
 var moveSnake = function() {
   let newLead = gameData.leadingSquare;
@@ -67,6 +75,7 @@ var moveSnake = function() {
   if (newLead === gameData.fruitSquare) {
     temporaryArray[temporaryArray.length] = gameData.activeSquares[gameData.activeSquares.length - 1];
     generateFruit();
+    gameData.tickrate = gameData.tickrate * 0.9
   }
   else {
     $('#' + gameData.activeSquares[gameData.activeSquares.length - 1] + "-tile").css('background-color','slategray');
@@ -116,7 +125,8 @@ generateGameData = function() {
     changeDirection: false,
     activeSquares: activeSquares,
     fruitSquare: fruitSquare,
-    tickrate: 120,
+    tickrate: 200,
+    lastTick: 0,
     gameRunning: false,
     gameOver: false
   }
