@@ -91,7 +91,7 @@ var moveSnake = function() {
     case 'left': if (gameData.leadingSquare % 20 === 0) {gameOver(); return;} else { for(let i = 0;i<gameData.activeSquares.length;i++){if(gameData.leadingSquare - 1 === gameData.activeSquares[i]){gameOver();return;}else{newLead = gameData.leadingSquare - 1}}} break;
     case 'right': if (gameData.leadingSquare % 20 === 19) {gameOver(); return;} else { for(let i = 0;i<gameData.activeSquares.length;i++){if(gameData.leadingSquare + 1 === gameData.activeSquares[i]){gameOver();return;}else{newLead = gameData.leadingSquare + 1}}} break;
     case 'down': if (gameData.leadingSquare > 379) {gameOver(); return;} else { for(let i = 0;i<gameData.activeSquares.length;i++){if(gameData.leadingSquare + 20 === gameData.activeSquares[i]){gameOver();return;}else{newLead = gameData.leadingSquare + 20}}} break;
-    case 'up': if (gameData.leadingSquare < 21) {gameOver(); return;} else { for(let i = 0;i<gameData.activeSquares.length;i++){if(gameData.leadingSquare - 20 === gameData.activeSquares[i]){gameOver();return;}else{newLead = gameData.leadingSquare - 20}}} break;
+    case 'up': if (gameData.leadingSquare < 20) {gameOver(); return;} else { for(let i = 0;i<gameData.activeSquares.length;i++){if(gameData.leadingSquare - 20 === gameData.activeSquares[i]){gameOver();return;}else{newLead = gameData.leadingSquare - 20}}} break;
   }
   var temporaryArray = [newLead];
   for (let i = 0; i < gameData.activeSquares.length - 1; i++) {
