@@ -3,17 +3,6 @@ $(document).ready(function() {
     generateGameArea(20);
     gameData = generateGameData();
 
-    $('html').click(function(){
-      if(gameData.gameOver) {
-        for (var i = 0; i < gameData.activeSquares.length;i++) {
-          $('#' + gameData.activeSquares[i] + '-tile').css('background-color','slategray');
-        }
-        $('#' + gameData.fruitSquare + '-tile').css('background-color','slategray');
-          gameData = generateGameData();
-      }
-    })
-
-
     $('html').keypress(function(key){switch (parseInt(key.keyCode)){
       case 97: gameData.newDirection[gameData.newDirection.length] = 'left'; break;
       case 119: gameData.newDirection[gameData.newDirection.length] = 'up'; break;
