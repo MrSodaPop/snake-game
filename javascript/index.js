@@ -11,7 +11,7 @@ $(document).ready(function() {
       case 32: if(!gameData.paused){gameData.paused=true;$('.instructions').replaceWith("<div class=\'instructions\'><strong>PAUSED</strong></div>")}else{gameData.paused=false;$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color</div>")};
       case 114: if(gameData.rainbow){gameData.rainbow=false;gameData.snakeColor=-1;}else{gameData.rainbow=true};
       case 99: if(gameData.snakeColor+1===gameData.snakeColorList.length){gameData.snakeColor=0}else{gameData.snakeColor++}for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color',gameData.snakeColorList[gameData.snakeColor]);};break;
-      case 13: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color</div>");} break;
+      case 113: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color</div>");} break;
       default: console.log('.');return;
     }
     if (!gameData.gameRunning && key.keyCode != 13) {
@@ -42,7 +42,7 @@ var gameUpdate = function() {
     gameData.lastTick = Date.now();
     if(gameData.gameOver) {
       $('.score').replaceWith("<div class=\'score\'>Game Over - " + (gameData.activeSquares.length-1) + "</div>");
-      $('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>ENTER</strong> to restart</div>");
+      $('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>Q</strong> to restart</div>");
       $('.score').css('font-size','3vw');
       $('.score').css('cursor','pointer');
       gameData.gameRunning = false; 
