@@ -4,13 +4,14 @@ $(document).ready(function() {
     gameData = generateGameData();
 
     $('html').keypress(function(key){switch (parseInt(key.keyCode)){
-      case 97: gameData.newDirection[gameData.newDirection.length] = 'left'; break;
-      case 119: gameData.newDirection[gameData.newDirection.length] = 'up'; break;
-      case 100: gameData.newDirection[gameData.newDirection.length] = 'right'; break;
-      case 115: gameData.newDirection[gameData.newDirection.length] = 'down'; break;
+      case 97: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'left'}; break;
+      case 119: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'up'}; break;
+      case 100: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'right'}; break;
+      case 115: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'down'}; break;
+      case 32: if(!gameData.paused){gameData.paused=true;$('.instructions').replaceWith("<div class=\'instructions\'><strong>PAUSED</strong></div>")}else{gameData.paused=false;$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color</div>")};
       case 114: if(gameData.rainbow){gameData.rainbow=false;gameData.snakeColor=-1;}else{gameData.rainbow=true};
-      case 32: if(gameData.snakeColor+1===gameData.snakeColorList.length){gameData.snakeColor=0}else{gameData.snakeColor++}for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color',gameData.snakeColorList[gameData.snakeColor]);};break;
-      case 13: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to change color<br><strong>R</strong> for rainbow</div>");} break;
+      case 99: if(gameData.snakeColor+1===gameData.snakeColorList.length){gameData.snakeColor=0}else{gameData.snakeColor++}for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color',gameData.snakeColorList[gameData.snakeColor]);};break;
+      case 13: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color</div>");} break;
       default: console.log('.');return;
     }
     if (!gameData.gameRunning && key.keyCode != 13) {
@@ -34,6 +35,9 @@ var gameTick = function() {
 }
 
 var gameUpdate = function() {
+  if(gameData.paused){
+    return;
+  }
   if (Date.now() - gameData.lastTick >= gameData.tickrate) {
     gameData.lastTick = Date.now();
     if(gameData.gameOver) {
@@ -152,7 +156,8 @@ generateGameData = function() {
     tickrate: 200,
     lastTick: 0,
     gameRunning: false,
-    gameOver: false
+    gameOver: false,
+    paused: false
   }
 }
 
