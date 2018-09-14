@@ -152,7 +152,7 @@ generateGameData = function() {
     rainbow: false,
     snakeColor: 0,
     snakeColorList: ['#52ea3a','#42f4df','#4156f4','#b241f4','#f92cca','#ed1e29','#e59412','#e2f72a'],
-    tickIncrease: 0.95,
+    tickIncrease: 0.97,
     tickrate: 200,
     lastTick: 0,
     gameRunning: false,
