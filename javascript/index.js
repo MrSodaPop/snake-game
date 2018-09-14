@@ -13,13 +13,16 @@ $(document).ready(function() {
       }
     })
 
+
     $('html').keypress(function(key){switch (parseInt(key.keyCode)){
       case 97: gameData.newDirection[gameData.newDirection.length] = 'left'; break;
       case 119: gameData.newDirection[gameData.newDirection.length] = 'up'; break;
       case 100: gameData.newDirection[gameData.newDirection.length] = 'right'; break;
       case 115: gameData.newDirection[gameData.newDirection.length] = 'down'; break;
-      case 13: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press WASD to start</div>");} break;
-      default: return;
+      case 114: if(gameData.rainbow){gameData.rainbow=false;gameData.snakeColor=-1;}else{gameData.rainbow=true};
+      case 32: if(gameData.snakeColor+1===gameData.snakeColorList.length){gameData.snakeColor=0}else{gameData.snakeColor++}for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color',gameData.snakeColorList[gameData.snakeColor]);};break;
+      case 13: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to change color<br><strong>R</strong> for rainbow</div>");} break;
+      default: console.log('.');return;
     }
     if (!gameData.gameRunning && key.keyCode != 13) {
       gameData.gameRunning = true;
@@ -46,11 +49,22 @@ var gameUpdate = function() {
     gameData.lastTick = Date.now();
     if(gameData.gameOver) {
       $('.score').replaceWith("<div class=\'score\'>Game Over - " + (gameData.activeSquares.length-1) + "</div>");
-      $('.instructions').replaceWith("<div class=\'instructions\'>Press ENTER to restart</div>");
+      $('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>ENTER</strong> to restart</div>");
       $('.score').css('font-size','3vw');
       $('.score').css('cursor','pointer');
       gameData.gameRunning = false; 
       return;
+    }
+    if (gameData.rainbow) {
+      if(gameData.snakeColor+1===gameData.snakeColorList.length){
+        gameData.snakeColor=0;
+      }
+      else {
+        gameData.snakeColor++;
+      }
+      for(let i = 0;i<gameData.activeSquares.length;i++) {
+        $('#'+gameData.activeSquares[i]+'-tile').css('background-color',gameData.snakeColorList[gameData.snakeColor]);
+      }
     }
     if (gameData.newDirection.length > 1) {
       checkNextMove();
@@ -101,7 +115,7 @@ var moveSnake = function() {
   gameData.activeSquares = temporaryArray;
   gameData.leadingSquare = newLead;
   for (let i = 0; i <gameData.activeSquares.length; i++) {
-    $('#' + gameData.activeSquares[i] + '-tile').css('background-color','#52ea3a')
+    $('#' + gameData.activeSquares[i] + '-tile').css('background-color',gameData.snakeColorList[gameData.snakeColor])
   }
 }
 
@@ -142,6 +156,9 @@ generateGameData = function() {
     newDirection: [0],
     activeSquares: activeSquares,
     fruitSquare: fruitSquare,
+    rainbow: false,
+    snakeColor: 0,
+    snakeColorList: ['#52ea3a','#42f4df','#4156f4','#b241f4','#f92cca','#ed1e29','#e59412','#e2f72a'],
     tickIncrease: 0.95,
     tickrate: 200,
     lastTick: 0,
