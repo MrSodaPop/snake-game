@@ -98,7 +98,7 @@ var moveSnake = function() {
     temporaryArray[i+1] = gameData.activeSquares[i];
   }
   if (newLead === gameData.fruitSquare) {
-    temporaryArray[temporaryArray.length] = gameData.activeSquares[gameData.activeSquares.length - 1];
+    temporaryArray[temporaryArray.length] = gameData.activeSquares[gameData.activeSquares.length-1];
     generateFruit();
     gameData.tickrate = gameData.tickrate * gameData.tickIncrease
   }
@@ -120,18 +120,19 @@ var generateGameArea = function() {
 }
 
 var generateFruit = function() {
-  var overlapping = true;
-  while (overlapping) {
-    fruitSquare = Math.floor(Math.random() * 400);
-    overlapping = false;
+  var overlapping = false;
     for (let i = 0; i < gameData.activeSquares.length + 1; i++) {
       if (fruitSquare === gameData.leadingSquare || fruitSquare === gameData.activeSquares[i]) {
         overlapping = true
       }
+    if (overlapping) {
+      generateFruit();
+    }
+    else {
+      gameData.fruitSquare = fruitSquare;
+      $('#' + gameData.fruitSquare + '-tile').css('background-color','red');
     }
   }
-  gameData.fruitSquare = fruitSquare;
-  $('#' + gameData.fruitSquare + '-tile').css('background-color','red');
 };
 
 generateGameData = function() {
