@@ -121,6 +121,7 @@ var generateGameArea = function() {
 
 var generateFruit = function() {
   var overlapping = false;
+  var fruitSquare = Math.floor(Math.random() * 399);
     for (let i = 0; i < gameData.activeSquares.length + 1; i++) {
       if (fruitSquare === gameData.leadingSquare || fruitSquare === gameData.activeSquares[i]) {
         overlapping = true
