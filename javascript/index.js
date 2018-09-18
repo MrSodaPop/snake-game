@@ -122,18 +122,22 @@ var generateGameArea = function() {
 var generateFruit = function() {
   var overlapping = false;
   var fruitSquare = Math.floor(Math.random() * 399);
-    for (let i = 0; i < gameData.activeSquares.length + 1; i++) {
-      if (fruitSquare === gameData.leadingSquare || fruitSquare === gameData.activeSquares[i]) {
+  for (let i = 0; i < gameData.activeSquares.length; i++) {
+  if (fruitSquare === gameData.activeSquares[i]) {
         overlapping = true
-      }
-    if (overlapping) {
-      generateFruit();
-    }
-    else {
-      gameData.fruitSquare = fruitSquare;
-      $('#' + gameData.fruitSquare + '-tile').css('background-color','red');
     }
   }
+  while (overlapping) {
+    var fruitSquare = Math.floor(Math.random() * 399);
+    overlapping = false
+    for (let i = 0; i < gameData.activeSquares.length; i++) {
+      if (fruitSquare === gameData.activeSquares[i]) {
+        overlapping = true
+      }
+    }
+  }
+  gameData.fruitSquare = fruitSquare;
+  $('#' + gameData.fruitSquare + '-tile').css('background-color','red');
 };
 
 generateGameData = function() {
