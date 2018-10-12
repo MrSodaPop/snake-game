@@ -4,14 +4,15 @@ $(document).ready(function() {
     gameData = generateGameData();
 
     $('html').keypress(function(key){switch (parseInt(key.keyCode)){
+      case 105: alert('Error: No internet connection detected!'); break;
       case 97: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'left'}; break;
       case 119: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'up'}; break;
       case 100: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'right'}; break;
       case 115: if(gameData.paused){}else{gameData.newDirection[gameData.newDirection.length] = 'down'}; break;
-      case 32: if(!gameData.paused){gameData.paused=true;$('.instructions').replaceWith("<div class=\'instructions\'><strong>PAUSED</strong></div>")}else{gameData.paused=false;$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color</div>")};
+      case 32: if(!gameData.paused){gameData.paused=true;$('.instructions').replaceWith("<div class=\'instructions\'><strong>PAUSED</strong></div>")}else{gameData.paused=false;$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color<br><strong>I</strong> for Online</div>")};
       case 114: if(gameData.rainbow){gameData.rainbow=false;gameData.snakeColor=-1;}else{gameData.rainbow=true};
       case 99: if(gameData.snakeColor+1===gameData.snakeColorList.length){gameData.snakeColor=0}else{gameData.snakeColor++}for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color',gameData.snakeColorList[gameData.snakeColor]);};break;
-      case 113: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'>Press <strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color</div>");} break;
+      case 113: if(gameData.gameOver){for(i=0;i<gameData.activeSquares.length;i++){$('#'+gameData.activeSquares[i]+'-tile').css('background-color','slategray');}$('#'+gameData.fruitSquare+'-tile').css('background-color','slategray');gameData = generateGameData();$('.instructions').replaceWith("<div class=\'instructions\'><strong>WASD</strong> to start<br><strong>SPACE</strong> to pause<br><strong>R</strong> for rainbow<br><strong>C</strong> to change color<br>Press <strong>I</strong> for Online</div>");} break;
       default: console.log('.');return;
     }
     if (!gameData.gameRunning && key.keyCode != 13) {
